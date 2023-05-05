@@ -19,6 +19,7 @@
 		8463B3F22A01A98D00EBEC33 /* SectionTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463B3F12A01A98D00EBEC33 /* SectionTextFieldStyle.swift */; };
 		8463B3F72A022E5300EBEC33 /* DateTimeString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463B3F62A022E5300EBEC33 /* DateTimeString.swift */; };
 		84C7DDEF2A02DA310005B9C9 /* PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7DDEE2A02DA310005B9C9 /* PickerView.swift */; };
+		84E78CA62A04B044009F350E /* ExpenseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E78CA52A04B044009F350E /* ExpenseDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		8463B3F12A01A98D00EBEC33 /* SectionTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTextFieldStyle.swift; sourceTree = "<group>"; };
 		8463B3F62A022E5300EBEC33 /* DateTimeString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeString.swift; sourceTree = "<group>"; };
 		84C7DDEE2A02DA310005B9C9 /* PickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerView.swift; sourceTree = "<group>"; };
+		84E78CA52A04B044009F350E /* ExpenseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 				8432B6272A0051BD00304A80 /* ExpenseInputView.swift */,
 				8463B3EA2A0074FD00EBEC33 /* ExpenseView.swift */,
 				8463B3EF2A00BC4000EBEC33 /* CategoryListView.swift */,
+				84E78CA52A04B044009F350E /* ExpenseDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 				8463B3F22A01A98D00EBEC33 /* SectionTextFieldStyle.swift in Sources */,
 				84C7DDEF2A02DA310005B9C9 /* PickerView.swift in Sources */,
 				8463B3F72A022E5300EBEC33 /* DateTimeString.swift in Sources */,
+				84E78CA62A04B044009F350E /* ExpenseDetailView.swift in Sources */,
 				8463B3F02A00BC4000EBEC33 /* CategoryListView.swift in Sources */,
 				8463B3EB2A0074FD00EBEC33 /* ExpenseView.swift in Sources */,
 			);

@@ -57,10 +57,8 @@ struct ExpenseView: View {
 
     private func createExpenseTableView(expenses: [ExpensePayment]) -> some View {
         ForEach(expenses) { expense in
-            NavigationLink(destination: Text("Test")) {
+            NavigationLink(destination: ExpenseDetailView()) {
                 HStack {
-//                    Image(systemName: "car")
-//                        .padding(.trailing)
                     VStack(alignment: .leading) {
                         Text(expense.title ?? "")
                             .bold()
