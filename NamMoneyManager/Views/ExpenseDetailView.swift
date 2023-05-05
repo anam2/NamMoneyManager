@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct ExpenseDetailView: View {
+
+    @Binding var selectedExpenseId: UUID?
+
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @Environment(\.presentationMode) var presentationMode
+
     var body: some View {
         ZStack {
             Color(UIColor.systemGroupedBackground)
@@ -36,7 +42,11 @@ struct ExpenseDetailView: View {
                 .padding()
 
                 Button {
-                    print("Button clicked.")
+                    print("Delete Button clicked.")
+                    DataController().deleteExpense(id: selectedExpenseId,
+                                                   context: managedObjectContext)
+                    self.presentationMode.wrappedValue.dismiss()
+                    
                 } label: {
                     HStack {
                         Text("Delete Expense")
@@ -51,11 +61,5 @@ struct ExpenseDetailView: View {
             .padding([.top, .leading, .trailing, .bottom])
         }
 
-    }
-}
-
-struct ExpenseDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExpenseDetailView()
     }
 }

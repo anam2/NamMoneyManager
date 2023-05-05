@@ -63,7 +63,7 @@ class DataController: ObservableObject {
 
     func getSpecificExpense(by category: PaymentCategory, context: NSManagedObjectContext) -> [ExpensePayment]? {
         let request = NSFetchRequest<ExpensePayment>(entityName: "ExpensePayment")
-        let sortDescriptor = NSSortDescriptor(key: "inputDate", ascending: false)
+//        let sortDescriptor = NSSortDescriptor(key: "inputDate", ascending: false)
         let predicate = NSPredicate(format: "category == %@", category)
         request.predicate = predicate
 
@@ -81,6 +81,20 @@ class DataController: ObservableObject {
         expensePayment.amount = amountPrice
         expensePayment.expenseDescription = description
         save(context: context)
+    }
+
+    func deleteExpense(id: UUID?, context: NSManagedObjectContext) {
+        guard let id = id else { return }
+        let fetchRequest = ExpensePayment.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        do {
+            let results = try context.fetch(fetchRequest)
+            if let deleteExpense = results.first {
+                context.delete(deleteExpense)
+            }
+        } catch {
+            NSLog("Failed to delete expense with id: \(id)")
+        }
     }
 
     // MARK: CATEGORIES

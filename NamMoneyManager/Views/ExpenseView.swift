@@ -16,7 +16,7 @@ struct ExpenseView: View {
 
     @State private var showingInputView = false
     @State private var selectedCategoryIndex: Int?
-
+    @State private var selectedExpenseId: UUID?
     var body: some View {
         NavigationView {
             List {
@@ -57,7 +57,7 @@ struct ExpenseView: View {
 
     private func createExpenseTableView(expenses: [ExpensePayment]) -> some View {
         ForEach(expenses) { expense in
-            NavigationLink(destination: ExpenseDetailView()) {
+            NavigationLink(destination: ExpenseDetailView(selectedExpenseId: $selectedExpenseId)) {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(expense.title ?? "")
@@ -71,6 +71,11 @@ struct ExpenseView: View {
                     Text("$ \(expense.amount ?? "")")
                 }
                 .padding([.top, .bottom], 5.0)
+                .onTapGesture {
+                    if let expenseId = expense.id {
+                        selectedExpenseId = expenseId
+                    }
+                }
             }
         }
     }
