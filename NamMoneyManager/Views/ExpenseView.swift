@@ -6,58 +6,128 @@
 //
 
 import SwiftUI
-import Foundation
+import CoreData
 
 struct ExpenseView: View {
 
     @Environment(\.managedObjectContext) var managedObjectContext
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.inputDate, order: .reverse)]) var expenses: FetchedResults<ExpensePayment>
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.name)]) var categories: FetchedResults<PaymentCategory>
+    @ObservedObject var viewModel: ExpenseViewModel
 
+    /// Toggle for ExpenseInputView.
     @State private var showingInputView = false
+    /// The index of the selected category. If nil, no categories has been selected.
     @State private var selectedCategoryIndex: Int?
-    @State private var selectedExpenseId: UUID?
+    /// The ID of the selected expense. Needed for detail view.
+//    @State private var selectedExpenseId: UUID?
+    /// The selected ExpensePayment. If no expense has been selected will be nil.
+//    @State private var selectedExpense: ExpensePayment?
+    /// If toggled, will make call to CoreData and populate viewModel with latest data.
+    @State private var reloadData: Bool = false
+
+    init(context: NSManagedObjectContext) {
+        viewModel = ExpenseViewModel(context: context)
+    }
+
+    // MARK: MAIN BODY
+
     var body: some View {
-        NavigationView {
-            List {
-                Section {
-                    Text("Total Money: $\(totalMoney())")
-                        .foregroundColor(.gray)
+        if viewModel.displayErrorView == true {
+            ErrorView()
+        } else {
+            NavigationView {
+                List {
+                    // Total money view.
+                    Section {
+                        totalMoneyView
+                    }
+                    // Category picker view.
+                    Section {
+                        categoryPickerView
+                    }
+                    // Expense list view.
+                    Section {
+                        expenseView
+                    }
                 }
-
-                Section {
-                    PickerView(pickerIcons: getPickerIconViews())
+                .navigationTitle("Expenses")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    addToolbarItem
                 }
-
-                Section {
-                    if let selectedCategoryIndex = selectedCategoryIndex {
-                        createExpenseTableView(expenses: DataController().getSpecificExpense(by: categories[selectedCategoryIndex],
-                                                                                             context: managedObjectContext) ?? [])
-                    } else {
-                        createExpenseTableView(expenses: DataController().getExpenses(context: managedObjectContext) ?? [])
+                .sheet(isPresented: $showingInputView) {
+                    ExpenseInputView(showExpenseSheet: $showingInputView,
+                                     reloadExpenseView: $reloadData)
+                }
+                .onChange(of: reloadData) { reloadData in
+                    if reloadData == true {
+                        viewModel.fetchExpenses()
+                        self.reloadData = false
                     }
                 }
             }
-            .navigationTitle("Nam Money Manager")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showingInputView.toggle()
-                    } label: {
-                        Label("Add", systemImage: "plus.circle")
-                    }
-                }
+        }
+    }
+
+    private var addToolbarItem: some ToolbarContent {
+        ToolbarItem(placement: .navigationBarTrailing) {
+            Button {
+                showingInputView.toggle()
+            } label: {
+                Label("Add", systemImage: "plus.circle")
             }
-            .sheet(isPresented: $showingInputView) {
-                ExpenseInputView(showExpenseSheet: $showingInputView)
+        }
+    }
+
+    private var totalMoneyView: some View {
+        HStack {
+            Spacer()
+            VStack(alignment: .center) {
+                Text("TOTAL")
+                    .font(.system(size: 18.0))
+                    .bold()
+                    .foregroundColor(.gray)
+                Text("$\(totalMoney())")
+                    .foregroundColor(.black)
+                    .bold()
+                    .font(.system(size: 26.0))
             }
-            .navigationBarTitleDisplayMode(.inline)
+            Spacer()
+        }
+    }
+
+    private var categoryPickerView: some View {
+        VStack(alignment: .leading) {
+            Text("CATEGORIES")
+                .font(.system(size: 12.0))
+                .bold()
+                .foregroundColor(Color.gray.opacity(0.9))
+            PickerView(pickerIcons: getPickerIconViews())
+        }
+    }
+
+    private func getPickerIconViews() -> [PickerIcon] {
+        var pickerIcons: [PickerIcon] = []
+        for (index, category) in viewModel.categories.enumerated() {
+            let pickerIcon = PickerIcon(text: category.name ?? "",
+                                        iconIndex: index,
+                                        selectedCategoryIndex: $selectedCategoryIndex)
+            pickerIcons.append(pickerIcon)
+        }
+        return pickerIcons
+    }
+
+    private var expenseView: some View {
+        if let selectedCategoryIndex = selectedCategoryIndex {
+            return createExpenseTableView(expenses: viewModel.getSpecificExpenses(by: viewModel.categories[selectedCategoryIndex]))
+        } else {
+            return createExpenseTableView(expenses: viewModel.allExpenses)
         }
     }
 
     private func createExpenseTableView(expenses: [ExpensePayment]) -> some View {
         ForEach(expenses) { expense in
-            NavigationLink(destination: ExpenseDetailView(selectedExpenseId: $selectedExpenseId)) {
+            NavigationLink(destination: ExpenseDetailView(selectedExpense: expense,
+                                                          reloadExpenseView: $reloadData)) {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(expense.title ?? "")
@@ -68,36 +138,12 @@ struct ExpenseView: View {
                             .font(.system(size: 12.0))
                     }
                     Spacer()
-                    Text("$ \(expense.amount ?? "")")
+                    let amountText = getMoneyFormatString(from: expense.amount ?? "")
+                    Text("$ \(amountText)")
                 }
                 .padding([.top, .bottom], 5.0)
-                .onTapGesture {
-                    if let expenseId = expense.id {
-                        selectedExpenseId = expenseId
-                    }
-                }
             }
         }
-    }
-
-    private func getPickerIconViews() -> [PickerIcon] {
-        var pickerIcons: [PickerIcon] = []
-        for (index, category) in categories.enumerated() {
-            let pickerIcon = PickerIcon(text: category.name ?? "",
-                                        iconIndex: index,
-                                        selectedCategoryIndex: $selectedCategoryIndex)
-            pickerIcons.append(pickerIcon)
-        }
-        return pickerIcons
-    }
-
-    private func totalMoney() -> String {
-        var totalAmount: Double = 0.0
-        for expense in expenses {
-            let doubleAmount = Double(expense.amount ?? "0.00")
-            totalAmount += doubleAmount ?? 0.00
-        }
-        return String(format: "%.2f", totalAmount)
     }
 
     private func getDate(date: Date?) -> String? {
@@ -107,4 +153,24 @@ struct ExpenseView: View {
         print("Current date: \(formatter.string(from: Date.now))")
         return formatter.string(from: date)
     }
+
+    private func getMoneyFormatString(from stringMoney: String) -> String {
+        let doubleMoney = Double(stringMoney) ?? 0.0
+        let numberFormatter = NumberFormatter()
+        numberFormatter.minimumFractionDigits = 2
+        numberFormatter.numberStyle = .decimal
+        return numberFormatter.string(from: NSNumber(value: doubleMoney)) ?? ""
+    }
+
+    private func totalMoney() -> String {
+        var totalAmount: Double = 0.0
+        for expense in viewModel.allExpenses {
+            let doubleAmount = Double(expense.amount ?? "0.00")
+            totalAmount += doubleAmount ?? 0.00
+        }
+        let totalMoneyString = String(format: "%.2f", totalAmount)
+        let moneyString = getMoneyFormatString(from: totalMoneyString)
+        return moneyString
+    }
+
 }

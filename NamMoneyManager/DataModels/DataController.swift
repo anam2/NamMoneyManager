@@ -37,17 +37,22 @@ class DataController: ObservableObject {
                     category: String,
                     inputDate: Date,
                     context: NSManagedObjectContext) {
-        let expense = ExpensePayment(context: context)
-        expense.id = UUID()
-        expense.title = title
-        expense.amount = amount
-        expense.expenseDescription = description
-        expense.category = getSpecificCategory(for: category, context: context)
-        expense.inputDate = Date()
-        save(context: context)
+        do {
+            let expense = ExpensePayment(context: context)
+            expense.id = UUID()
+            expense.title = title
+            expense.amount = amount
+            expense.expenseDescription = description
+            expense.category = try getSpecificCategory(for: category, context: context)
+            expense.inputDate = Date()
+            save(context: context)
+        } catch {
+            // Handle error
+            return
+        }
     }
 
-    func getExpenses(context: NSManagedObjectContext) -> [ExpensePayment]? {
+    func getExpenses(context: NSManagedObjectContext) throws -> [ExpensePayment]? {
         let request = NSFetchRequest<ExpensePayment>(entityName: "ExpensePayment")
         let sortDescriptor = NSSortDescriptor(key: "inputDate", ascending: false)
         request.sortDescriptors = [sortDescriptor]
@@ -56,8 +61,7 @@ class DataController: ObservableObject {
             let expenses = try context.fetch(request)
             return expenses
         } catch let error as NSError {
-            print("Error fetching expenses: \(error.localizedDescription)")
-            return nil
+            throw error
         }
     }
 
@@ -109,7 +113,7 @@ class DataController: ObservableObject {
     /**
      Fetches the entire category list stored in Core Data.
      */
-    func getCategory(context: NSManagedObjectContext) -> [PaymentCategory]? {
+    func getCategory(context: NSManagedObjectContext) throws -> [PaymentCategory]? {
         let request = NSFetchRequest<PaymentCategory>(entityName: "PaymentCategory")
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: false)
         request.sortDescriptors = [sortDescriptor]
@@ -119,18 +123,23 @@ class DataController: ObservableObject {
             return categories
         } catch let error as NSError {
             print("Error fetching expenses: \(error.localizedDescription)")
-            return nil
+            throw error
         }
     }
 
     /**
      Fetches a specfic category list stored in Core Data.
      */
-    private func getSpecificCategory(for categoryName: String, context: NSManagedObjectContext) -> PaymentCategory? {
-        guard let categories = getCategory(context: context),
-              let index = categories.firstIndex(where: { $0.name == categoryName }) else {
-            return nil
+    private func getSpecificCategory(for categoryName: String,
+                                     context: NSManagedObjectContext) throws -> PaymentCategory? {
+
+        do {
+            guard let categories = try getCategory(context: context),
+                  let index = categories.firstIndex(where: { $0.name == categoryName }) else { return nil }
+            return categories[index]
+        } catch let error as NSError {
+            throw error
         }
-        return categories[index]
+
     }
 }

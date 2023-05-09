@@ -7,17 +7,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "289E6212-39E9-4525-BB30-65448316E65E"
+            uuid = "6747F4DE-C36D-44C9-A2E7-F3E29D7CB071"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NamMoneyManager/Views/ExpenseInputView.swift"
+            filePath = "NamMoneyManager/Views/ExpenseView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
             landmarkName = "body"
             landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "6747F4DE-C36D-44C9-A2E7-F3E29D7CB071 - 64d024564b3ca5e6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #4 () -&gt; () in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.onAppear(perform: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; some&gt;&gt;.0 in NamMoneyManager.ExpenseView.body.getter : some"
+                  moduleName = "NamMoneyManager"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/GitRepos/NamMoneyManager/NamMoneyManager/Views/ExpenseView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "36">
+               </Location>
+               <Location
+                  uuid = "6747F4DE-C36D-44C9-A2E7-F3E29D7CB071 - 1f8f78b6e1267359"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #4 (Swift.Bool) -&gt; () in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0 in NamMoneyManager.ExpenseView.body.getter : some"
+                  moduleName = "NamMoneyManager"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/GitRepos/NamMoneyManager/NamMoneyManager/Views/ExpenseView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "112">
+               </Location>
+               <Location
+                  uuid = "6747F4DE-C36D-44C9-A2E7-F3E29D7CB071 - 1f8f78b6e12673f4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #4 (Swift.Bool) -&gt; () in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, perform: (&#x3c4;_1_0) -&gt; ()) -&gt; some&gt;&gt;.0 in NamMoneyManager.ExpenseView.body.getter : some"
+                  moduleName = "NamMoneyManager"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/GitRepos/NamMoneyManager/NamMoneyManager/Views/ExpenseView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "62"
+                  endingLineNumber = "62"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

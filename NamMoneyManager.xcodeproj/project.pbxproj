@@ -20,6 +20,8 @@
 		8463B3F72A022E5300EBEC33 /* DateTimeString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463B3F62A022E5300EBEC33 /* DateTimeString.swift */; };
 		84C7DDEF2A02DA310005B9C9 /* PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7DDEE2A02DA310005B9C9 /* PickerView.swift */; };
 		84E78CA62A04B044009F350E /* ExpenseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E78CA52A04B044009F350E /* ExpenseDetailView.swift */; };
+		84E78CA82A058596009F350E /* ExpenseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E78CA72A058596009F350E /* ExpenseViewModel.swift */; };
+		84E78CAA2A059405009F350E /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E78CA92A059405009F350E /* ErrorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		8463B3F62A022E5300EBEC33 /* DateTimeString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeString.swift; sourceTree = "<group>"; };
 		84C7DDEE2A02DA310005B9C9 /* PickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerView.swift; sourceTree = "<group>"; };
 		84E78CA52A04B044009F350E /* ExpenseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailView.swift; sourceTree = "<group>"; };
+		84E78CA72A058596009F350E /* ExpenseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseViewModel.swift; sourceTree = "<group>"; };
+		84E78CA92A059405009F350E /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,13 +74,13 @@
 		8432B6162A004E3F00304A80 /* NamMoneyManager */ = {
 			isa = PBXGroup;
 			children = (
+				8432B61D2A004E4000304A80 /* NamMoneyManager.entitlements */,
+				8432B61B2A004E4000304A80 /* Assets.xcassets */,
+				8432B6172A004E3F00304A80 /* NamMoneyManagerApp.swift */,
 				8463B3F32A021B8B00EBEC33 /* Enums */,
 				8463B3EC2A009C8D00EBEC33 /* SharedViews */,
-				8432B6172A004E3F00304A80 /* NamMoneyManagerApp.swift */,
 				8432B6262A0051AD00304A80 /* Views */,
 				8463B3E92A00732000EBEC33 /* DataModels */,
-				8432B61B2A004E4000304A80 /* Assets.xcassets */,
-				8432B61D2A004E4000304A80 /* NamMoneyManager.entitlements */,
 				8432B61E2A004E4000304A80 /* Preview Content */,
 			);
 			path = NamMoneyManager;
@@ -95,8 +99,10 @@
 			children = (
 				8432B6272A0051BD00304A80 /* ExpenseInputView.swift */,
 				8463B3EA2A0074FD00EBEC33 /* ExpenseView.swift */,
+				84E78CA72A058596009F350E /* ExpenseViewModel.swift */,
 				8463B3EF2A00BC4000EBEC33 /* CategoryListView.swift */,
 				84E78CA52A04B044009F350E /* ExpenseDetailView.swift */,
+				84E78CA92A059405009F350E /* ErrorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -199,6 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8432B62E2A005B0400304A80 /* DataController.swift in Sources */,
+				84E78CA82A058596009F350E /* ExpenseViewModel.swift in Sources */,
 				8463B3EE2A009C9800EBEC33 /* FloatingPlaceholderTextField.swift in Sources */,
 				8432B62B2A0058D000304A80 /* MoneyManagerModel.xcdatamodeld in Sources */,
 				8432B6182A004E3F00304A80 /* NamMoneyManagerApp.swift in Sources */,
@@ -208,6 +215,7 @@
 				8463B3F72A022E5300EBEC33 /* DateTimeString.swift in Sources */,
 				84E78CA62A04B044009F350E /* ExpenseDetailView.swift in Sources */,
 				8463B3F02A00BC4000EBEC33 /* CategoryListView.swift in Sources */,
+				84E78CAA2A059405009F350E /* ErrorView.swift in Sources */,
 				8463B3EB2A0074FD00EBEC33 /* ExpenseView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

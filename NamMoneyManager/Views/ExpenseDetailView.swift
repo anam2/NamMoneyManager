@@ -9,57 +9,114 @@ import SwiftUI
 
 struct ExpenseDetailView: View {
 
-    @Binding var selectedExpenseId: UUID?
+    let selectedExpense: ExpensePayment
+    @Binding var reloadExpenseView: Bool
+
+    @State var showEditView: Bool = false
 
     @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.presentationMode) var presentationMode
 
+    // MARK: MAIN BODY
+
+    var backgroundColor: CGColor = UIColor.systemGroupedBackground.cgColor
+
     var body: some View {
         ZStack {
-            Color(UIColor.systemGroupedBackground)
+            Color(backgroundColor)
                 .ignoresSafeArea()
             VStack {
                 VStack {
-                    Text("Grocery")
-                        .font(.system(size: 25.0))
-                        .bold()
-                    Text("Target")
-                }
+                    VStack {
+                        Text(selectedExpense.title ?? "")
+                            .font(.system(size: 25.0))
+                            .bold()
+                        Text(selectedExpense.category?.name ?? "")
+                    }
 
-                VStack {
-                    HStack {
-                        VStack {
-                            Text("2/29/23")
+                    VStack {
+                        HStack {
+                            VStack {
+                                Text(getDate(date: selectedExpense.inputDate) ?? "")
+                            }
+                            Spacer()
+                            VStack {
+                                Text(selectedExpense.amount ?? "")
+                                Text("")
+                                    .bold()
+                            }
                         }
-                        Spacer()
-                        VStack {
-                            Text("$43.69")
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+
+                    Button {
+                        print("Delete Button clicked.")
+                        DataController().deleteExpense(id: selectedExpense.id,
+                                                       context: managedObjectContext)
+                        reloadExpenseView = true
+                        self.presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        HStack {
+                            Text("Delete Expense")
                                 .bold()
                         }
+                        .padding()
+                        .overlay(RoundedRectangle(cornerRadius: 25).stroke(Color.red, lineWidth: 2))
+                        .foregroundColor(Color.red)
                     }
                 }
-                .frame(maxWidth: .infinity)
                 .padding()
-
-                Button {
-                    print("Delete Button clicked.")
-                    DataController().deleteExpense(id: selectedExpenseId,
-                                                   context: managedObjectContext)
-                    self.presentationMode.wrappedValue.dismiss()
-                    
-                } label: {
-                    HStack {
-                        Text("Delete Expense")
-                            .bold()
-                    }
-                    .padding()
-                    .overlay(RoundedRectangle(cornerRadius: 25).stroke(Color.red, lineWidth: 2))
-                    .foregroundColor(Color.red)
-                }
+                .background(Color.white)
                 Spacer()
             }
             .padding([.top, .leading, .trailing, .bottom])
         }
-
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            backToolbarItem
+            editToolbarItem
+        }
+//        .sheet(isPresented: $showEditView) {
+//            ExpenseInputView(expenseTitle: selectedExpense?.title ?? "",
+//                             amountSpent: selectedExpense?.amount ?? "",
+//                             description: selectedExpense?.description ?? "",
+//                             displayCategory: selectedExpense?.category?.name ?? "",
+//                             inputDate: selectedExpense?.inputDate ?? Date.now)
+//        }
     }
+
+    // MARK: TOOLBAR ITEMS
+
+    var editToolbarItem: some ToolbarContent {
+        ToolbarItem(placement: .navigationBarTrailing) {
+            Button {
+                self.showEditView = true
+            } label: {
+                Text("Edit")
+            }
+        }
+    }
+
+    var backToolbarItem: some ToolbarContent {
+        ToolbarItem(placement: .navigationBarLeading) {
+            Button {
+                self.presentationMode.wrappedValue.dismiss()
+            } label: {
+                HStack {
+                    Image(systemName: "chevron.backward")
+                    Text("Back")
+                }
+            }
+        }
+    }
+
+    private func getDate(date: Date?) -> String? {
+        guard let date = date else { return nil }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM-dd-yyyy"
+        print("Current date: \(formatter.string(from: Date.now))")
+        return formatter.string(from: date)
+    }
+
 }

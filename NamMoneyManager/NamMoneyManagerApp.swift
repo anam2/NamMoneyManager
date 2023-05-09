@@ -14,7 +14,7 @@ struct NamMoneyManagerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ExpenseView()
+            ExpenseView(context: dataController.container.viewContext)
                 .environment(\.managedObjectContext, dataController.container.viewContext)
         }
     }
