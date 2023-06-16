@@ -17,13 +17,11 @@ struct ExpenseInputViewDataModel {
 }
 
 struct ExpenseInputView: View {
-    @Binding var showExpenseSheet: Bool
-    @Binding var reloadExpenseView: Bool
-
     @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.dismiss) var dismiss
 
-//    @State var viewDataModel = ExpenseInputViewDataModel()
+    @Binding var showExpenseSheet: Bool
+    @Binding var reloadExpenseView: Bool
 
     @State var expenseTitle: String = ""
     @State var amountSpent: String = ""

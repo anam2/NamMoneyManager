@@ -67,7 +67,6 @@ class DataController: ObservableObject {
 
     func getSpecificExpense(by category: PaymentCategory, context: NSManagedObjectContext) -> [ExpensePayment]? {
         let request = NSFetchRequest<ExpensePayment>(entityName: "ExpensePayment")
-//        let sortDescriptor = NSSortDescriptor(key: "inputDate", ascending: false)
         let predicate = NSPredicate(format: "category == %@", category)
         request.predicate = predicate
 

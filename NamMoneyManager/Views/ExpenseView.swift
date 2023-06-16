@@ -17,10 +17,6 @@ struct ExpenseView: View {
     @State private var showingInputView = false
     /// The index of the selected category. If nil, no categories has been selected.
     @State private var selectedCategoryIndex: Int?
-    /// The ID of the selected expense. Needed for detail view.
-//    @State private var selectedExpenseId: UUID?
-    /// The selected ExpensePayment. If no expense has been selected will be nil.
-//    @State private var selectedExpense: ExpensePayment?
     /// If toggled, will make call to CoreData and populate viewModel with latest data.
     @State private var reloadData: Bool = false
 

@@ -77,13 +77,6 @@ struct ExpenseDetailView: View {
             backToolbarItem
             editToolbarItem
         }
-//        .sheet(isPresented: $showEditView) {
-//            ExpenseInputView(expenseTitle: selectedExpense?.title ?? "",
-//                             amountSpent: selectedExpense?.amount ?? "",
-//                             description: selectedExpense?.description ?? "",
-//                             displayCategory: selectedExpense?.category?.name ?? "",
-//                             inputDate: selectedExpense?.inputDate ?? Date.now)
-//        }
     }
 
     // MARK: TOOLBAR ITEMS

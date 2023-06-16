@@ -58,11 +58,3 @@ struct CategoryListView: View {
         }
     }
 }
-
-//struct CategoryListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let categories = ["Gas", "Food", "Grocery"]
-//        @State var selectedCategory: String = ""
-//        CategoryListView(displayCategory: $selectedCategory)
-//    }
-//}
