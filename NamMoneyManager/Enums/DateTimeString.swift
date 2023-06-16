@@ -27,16 +27,4 @@ enum DateTimeString: String {
             return "# year ago"
         }
     }
-
-//    func getDateTimeString(for date: Date) -> String {
-//        let currentDateTime = Date.now
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "MM-dd-yyyy HH:mm"
-//        return formatter.dateStyle(date)
-//        // 05-02-2023 22:01
-//    }
-//
-//    func getDifferenceInTime(firstDateTime: String, secondDateTime: String) {
-//
-//    }
 }

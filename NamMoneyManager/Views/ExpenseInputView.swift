@@ -8,11 +8,20 @@
 import SwiftUI
 import CoreData
 
-struct ExpenseInputView: View {
-    @Binding var showExpenseSheet: Bool
+struct ExpenseInputViewDataModel {
+    var expenseTitle: String = ""
+    var amountSpent: String = ""
+    var description: String = ""
+    var displayCategory: String = ""
+    var inputDate: Date = Date.now
+}
 
+struct ExpenseInputView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.dismiss) var dismiss
+
+    @Binding var showExpenseSheet: Bool
+    @Binding var reloadExpenseView: Bool
 
     @State var expenseTitle: String = ""
     @State var amountSpent: String = ""
@@ -26,8 +35,20 @@ struct ExpenseInputView: View {
 
     @FocusState var amountIsFocused: Bool
 
-    init(showExpenseSheet: Binding<Bool>) {
+    init(showExpenseSheet: Binding<Bool> = .constant(false),
+         reloadExpenseView: Binding<Bool> = .constant(false),
+         expenseTitle: String = "",
+         amountSpent: String = "",
+         description: String = "",
+         displayCategory: String = "",
+         inputDate: Date = Date.now) {
         _showExpenseSheet = showExpenseSheet
+        _reloadExpenseView = reloadExpenseView
+        self.expenseTitle = expenseTitle
+        self.amountSpent = amountSpent
+        self.description = description
+        self.displayCategory = displayCategory
+        self.inputDate = inputDate
         navbarSetup()
     }
 
@@ -52,6 +73,9 @@ struct ExpenseInputView: View {
                     TextField("", text: $expenseTitle)
                         .textFieldStyle(SectionTextFieldStyle(leftTitleText: "Title",
                                                               rightTitleText: expenseTitle))
+                        .onAppear {
+                            self.expenseTitle = "Test"
+                        }
 
                     TextField("", text: $amountSpent)
                         .textFieldStyle(SectionTextFieldStyle(leftTitleText: "Amount",
@@ -103,6 +127,7 @@ struct ExpenseInputView: View {
                                                         category: displayCategory,
                                                         inputDate: inputDate,
                                                         context: managedObjectContext)
+                            reloadExpenseView = true
                             showExpenseSheet = false
                         }
                         Spacer()

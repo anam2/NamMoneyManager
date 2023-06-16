@@ -55,11 +55,3 @@ struct PickerIcon: View {
         }
     }
 }
-
-//struct PickerIcon_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PickerIcon(text: "Gas") {
-//            print("Test")
-//        }
-//    }
-//}
